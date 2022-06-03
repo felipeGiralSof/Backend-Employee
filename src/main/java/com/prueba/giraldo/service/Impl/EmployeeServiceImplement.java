@@ -1,6 +1,7 @@
 package com.prueba.giraldo.service.Impl;
 
 import com.prueba.giraldo.dto.EmployeeDto;
+import com.prueba.giraldo.dto.EmployeeSaveDto;
 import com.prueba.giraldo.entities.EmployeeEntity;
 import com.prueba.giraldo.repositories.EmployeeRepository;
 import com.prueba.giraldo.service.EmployeeService;
@@ -18,7 +19,7 @@ public class EmployeeServiceImplement implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
     @Override
-    public EmployeeDto save(EmployeeDto newUser) {
+    public EmployeeDto save(EmployeeSaveDto newUser) {
         ModelMapper modelMapper = new ModelMapper();
         newUser.setCreateAt(new Timestamp(new Date().getTime()));
         newUser.setStatus(true);

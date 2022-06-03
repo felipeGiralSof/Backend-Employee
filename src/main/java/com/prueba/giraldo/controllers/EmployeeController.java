@@ -1,6 +1,7 @@
 package com.prueba.giraldo.controllers;
 
 import com.prueba.giraldo.dto.EmployeeDto;
+import com.prueba.giraldo.dto.EmployeeSaveDto;
 import com.prueba.giraldo.entities.EmployeeEntity;
 import com.prueba.giraldo.repositories.EmployeeRepository;
 import com.prueba.giraldo.service.EmployeeService;
@@ -32,8 +33,14 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public EmployeeDto newUser(@RequestBody EmployeeDto newUser){
+    public EmployeeDto newUser(@RequestBody EmployeeSaveDto newUser){
         return service.save(newUser);
+    }
+
+    @PostMapping(value = "/edit")
+    public EmployeeEntity edit(@RequestBody EmployeeSaveDto newUser) {
+        ModelMapper mapper = new ModelMapper();
+        return repository.save(mapper.map(newUser, EmployeeEntity.class));
     }
 
     @GetMapping(value = "/delete/{id}")

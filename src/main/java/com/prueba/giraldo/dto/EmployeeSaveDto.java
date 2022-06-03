@@ -1,12 +1,12 @@
 package com.prueba.giraldo.dto;
 
 import lombok.Data;
+
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
-public class EmployeeDto {
-    private Integer id;
+public class EmployeeSaveDto {
     private String surname;
     private String secondSurname;
     private String firstName;
