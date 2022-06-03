@@ -1,7 +1,7 @@
 package com.prueba.giraldo.service;
 
-import com.prueba.giraldo.entities.EmployeeEntity;
+import com.prueba.giraldo.dto.EmployeeDto;
 
 public interface EmployeeService {
-    EmployeeEntity save(EmployeeEntity newUser);
+    EmployeeDto save(EmployeeDto newUser);
 }

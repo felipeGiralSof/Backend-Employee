@@ -1,10 +1,10 @@
 package com.prueba.giraldo.controllers;
 
-import com.prueba.giraldo.caseuse.CreateEmployee;
+import com.prueba.giraldo.dto.EmployeeDto;
 import com.prueba.giraldo.entities.EmployeeEntity;
 import com.prueba.giraldo.repositories.EmployeeRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.prueba.giraldo.service.EmployeeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -12,12 +12,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value ="/employee")
 public class EmployeeController {
-    private final EmployeeRepository repository;
-    private final CreateEmployee createEmployee;
 
-    public EmployeeController(EmployeeRepository repository, CreateEmployee createEmployee) {
+    private final EmployeeService service;
+    private final EmployeeRepository repository;
+
+    public EmployeeController(EmployeeRepository repository, EmployeeService service) {
         this.repository = repository;
-        this.createEmployee = createEmployee;
+        this.service = service;
     }
 
     @GetMapping
@@ -31,7 +32,14 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeEntity> newUser(@RequestBody EmployeeEntity newUser){
-        return new ResponseEntity<>(createEmployee.save(newUser), HttpStatus.CREATED);
+    public EmployeeDto newUser(@RequestBody EmployeeDto newUser){
+        return service.save(newUser);
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    public void delete(@PathVariable("id") Integer id){
+        ModelMapper modelMapper = new ModelMapper();
+        EmployeeEntity employee = modelMapper.map(this.repository.findById(id), EmployeeEntity.class);
+        this.repository.delete(employee);
     }
 }
